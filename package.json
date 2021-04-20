@@ -7,11 +7,17 @@
     "start": "next start"
   },
   "dependencies": {
+    "cookies": "^0.8.0",
+    "crypto": "^1.0.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.13",
     "next": "latest",
+    "next-auth": "^3.14.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "swr": "0.2.2"
+    "swr": "0.2.2",
+    "util": "^0.12.3",
+    "validator": "^13.5.2"
   },
   "license": "MIT"
 }
