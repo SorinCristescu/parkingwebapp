@@ -4,22 +4,21 @@ import { mutate } from 'swr';
 
 import styles from './Form.module.css';
 
-const Form = ({ formId, petForm, forNewPet = true }) => {
+const Form = ({ formId, placeForm, forNewPlace = true }) => {
   const router = useRouter();
   const contentType = 'application/json';
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
 
   const [form, setForm] = useState({
-    name: petForm.name,
-    owner_name: petForm.owner_name,
-    species: petForm.species,
-    age: petForm.age,
-    poddy_trained: petForm.poddy_trained,
-    diet: petForm.diet,
-    image_url: petForm.image_url,
-    likes: petForm.likes,
-    dislikes: petForm.dislikes,
+    owner: placeForm.owner,
+    street_address: placeForm.street_address,
+    city: placeForm.city,
+    state: placeForm.state,
+    country: placeForm.country,
+    description: placeForm.description,
+    images_url: placeForm.images_url,
+    id_document: placeForm.id_document,
   });
 
   /* The PUT method edits an existing entry in the mongodb database. */
@@ -27,7 +26,7 @@ const Form = ({ formId, petForm, forNewPet = true }) => {
     const { id } = router.query;
 
     try {
-      const res = await fetch(`/api/pets/${id}`, {
+      const res = await fetch(`/api/places/${id}`, {
         method: 'PUT',
         headers: {
           Accept: contentType,
@@ -43,17 +42,17 @@ const Form = ({ formId, petForm, forNewPet = true }) => {
 
       const { data } = await res.json();
 
-      mutate(`/api/pets/${id}`, data, false); // Update the local data without a revalidation
+      mutate(`/api/places/${id}`, data, false); // Update the local data without a revalidation
       router.push('/');
     } catch (error) {
-      setMessage('Failed to update pet');
+      setMessage('Failed to update place');
     }
   };
 
   /* The POST method adds a new entry in the mongodb database. */
   const postData = async (form) => {
     try {
-      const res = await fetch('/api/pets', {
+      const res = await fetch('/api/places', {
         method: 'POST',
         headers: {
           Accept: contentType,
@@ -69,14 +68,15 @@ const Form = ({ formId, petForm, forNewPet = true }) => {
 
       router.push('/');
     } catch (error) {
-      setMessage('Failed to add pet');
+      setMessage('Failed to add place');
     }
   };
 
   const handleChange = (e) => {
     const target = e.target;
-    const value =
-      target.name === 'poddy_trained' ? target.checked : target.value;
+    const value = target.value;
+    // const value =
+    //   target.name === 'poddy_trained' ? target.checked : target.value;
     const name = target.name;
 
     setForm({
@@ -89,7 +89,7 @@ const Form = ({ formId, petForm, forNewPet = true }) => {
     e.preventDefault();
     const errs = formValidate();
     if (Object.keys(errs).length === 0) {
-      forNewPet ? postData(form) : putData(form);
+      forNewPlace ? postData(form) : putData(form);
     } else {
       setErrors({ errs });
     }
@@ -98,120 +98,113 @@ const Form = ({ formId, petForm, forNewPet = true }) => {
   /* Makes sure pet info is filled for pet name, owner name, species, and image url*/
   const formValidate = () => {
     let err = {};
-    if (!form.name) err.name = 'Name is required';
-    if (!form.owner_name) err.owner_name = 'Owner is required';
-    if (!form.species) err.species = 'Species is required';
-    if (!form.image_url) err.image_url = 'Image URL is required';
+    if (!form.owner) err.owner = 'Name is required';
+    if (!form.street_address) err.street_address = 'Street address is required';
+    if (!form.city) err.city = 'City is required';
+    if (!form.state) err.state = 'State is required';
+    if (!form.country) err.country = 'Country is required';
+    if (!form.description) err.description = 'Description is required';
+    if (!form.images_url) err.images_url = 'Image URL is required';
+    if (!form.id_document) err.id_document = 'ID document URL is required';
     return err;
   };
-
   return (
     <>
       <form className={styles.form} id={formId} onSubmit={handleSubmit}>
-        <label className={styles.label} htmlFor='name'>
-          Name
-        </label>
-        <input
-          className={styles.input}
-          type='text'
-          maxLength='20'
-          name='name'
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-
-        <label className={styles.label} htmlFor='owner_name'>
+        <label className={styles.label} htmlFor='owner'>
           Owner
         </label>
         <input
           className={styles.input}
           type='text'
           maxLength='20'
-          name='owner_name'
-          value={form.owner_name}
+          name='owner'
+          value={form.owner}
           onChange={handleChange}
           required
         />
 
-        <label className={styles.label} htmlFor='species'>
-          Species
+        <label className={styles.label} htmlFor='street_address'>
+          Street Address
+        </label>
+        <input
+          className={styles.input}
+          type='text'
+          maxLength='20'
+          name='street_address'
+          value={form.street_address}
+          onChange={handleChange}
+          required
+        />
+
+        <label className={styles.label} htmlFor='city'>
+          City
         </label>
         <input
           className={styles.input}
           type='text'
           maxLength='30'
-          name='species'
-          value={form.species}
+          name='city'
+          value={form.city}
           onChange={handleChange}
           required
         />
 
-        <label className={styles.label} htmlFor='age'>
-          Age
+        <label className={styles.label} htmlFor='state'>
+          State
         </label>
         <input
           className={styles.input}
-          type='number'
-          name='age'
-          value={form.age}
+          type='text'
+          name='state'
+          value={form.state}
           onChange={handleChange}
         />
 
-        <label className={styles.label} htmlFor='poddy_trained'>
-          Potty Trained
+        <label className={styles.label} htmlFor='country'>
+          Country
         </label>
         <input
           className={styles.input}
-          type='checkbox'
-          name='poddy_trained'
-          checked={form.poddy_trained}
+          type='text'
+          name='country'
+          checked={form.country}
           onChange={handleChange}
         />
 
-        <label className={styles.label} htmlFor='diet'>
-          Diet
+        <label className={styles.label} htmlFor='description'>
+          Description
         </label>
         <textarea
           className={styles.textarea}
-          name='diet'
+          name='description'
           maxLength='60'
-          value={form.diet}
+          value={form.description}
           onChange={handleChange}
         />
 
-        <label className={styles.label} htmlFor='image_url'>
+        <label className={styles.label} htmlFor='images_url'>
           Image URL
         </label>
         <input
           className={styles.input}
-          type='url'
-          name='image_url'
-          value={form.image_url}
+          type='text'
+          name='images_url'
+          value={form.images_url}
           onChange={handleChange}
           required
         />
 
-        <label className={styles.label} htmlFor='likes'>
-          Likes
+        <label className={styles.label} htmlFor='id_document'>
+          ID Document URL
         </label>
-        <textarea
-          className={styles.textarea}
-          name='likes'
-          maxLength='60'
-          value={form.likes}
+        <input
+          className={styles.input}
+          type='text'
+          name='id_document'
+          value={form.id_document}
           onChange={handleChange}
-        />
-
-        <label className={styles.label} htmlFor='dislikes'>
-          Dislikes
-        </label>
-        <textarea
-          className={styles.textarea}
-          name='dislikes'
-          maxLength='60'
-          value={form.dislikes}
-          onChange={handleChange}
+          required
         />
 
         <button type='submit' className={styles.btn}>

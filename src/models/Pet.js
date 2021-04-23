@@ -1,7 +1,12 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 /* PetSchema will correspond to a collection in your MongoDB database. */
 const PetSchema = new mongoose.Schema({
+  _id: {
+    /* The name of this pet */
+
+    type: String,
+  },
   name: {
     /* The name of this pet */
 
@@ -54,6 +59,6 @@ const PetSchema = new mongoose.Schema({
 
     type: Array,
   },
-})
+});
 
-export default mongoose.models.Pet || mongoose.model('Pet', PetSchema)
+export default mongoose.models.Pet || mongoose.model('Pet', PetSchema);

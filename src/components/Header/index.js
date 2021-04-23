@@ -8,6 +8,7 @@ import ButtonLink from '../ButtonLink';
 
 export default function Header() {
   const [session, loading] = useSession();
+
   return (
     <div className={styles.header}>
       <div className={styles.navbar}>
@@ -17,6 +18,7 @@ export default function Header() {
           </a>
         </Link>
       </div>
+
       <div className={styles.nav}>
         <HeaderLink
           href='/find-a-place'
@@ -46,6 +48,17 @@ export default function Header() {
             iconSrc='/icons/profile.svg'
             handleClick={() => signOut()}
           />
+        )}
+
+        {session && (
+          <div className={styles.user}>
+            <p className={styles.username}>{session.user.name}</p>
+            <img
+              className={styles.userimage}
+              src={session.user.image}
+              alt={`${session.user.name} photo`}
+            />
+          </div>
         )}
 
         {/* <HeaderLink href='/sign-up' name='Find a place' iconSrc='/icons/marker.svg'/> */}

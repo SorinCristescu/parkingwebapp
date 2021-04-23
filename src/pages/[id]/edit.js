@@ -1,33 +1,37 @@
-import { useRouter } from 'next/router'
-import useSWR from 'swr'
-import Form from '../../components/Form'
+import { useRouter } from 'next/router';
+import useSWR from 'swr';
+import Form from '../../components/Form';
 
 const fetcher = (url) =>
   fetch(url)
     .then((res) => res.json())
-    .then((json) => json.data)
+    .then((json) => json.data);
 
-const EditPet = () => {
-  const router = useRouter()
-  const { id } = router.query
-  const { data: pet, error } = useSWR(id ? `/api/pets/${id}` : null, fetcher)
+const EditPlace = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const { data: place, error } = useSWR(
+    id ? `/api/places/${id}` : null,
+    fetcher
+  );
 
-  if (error) return <p>Failed to load</p>
-  if (!pet) return <p>Loading...</p>
+  if (error) return <p>Failed to load</p>;
+  if (!place) return <p>Loading...</p>;
 
-  const petForm = {
-    name: pet.name,
-    owner_name: pet.owner_name,
-    species: pet.species,
-    age: pet.age,
-    poddy_trained: pet.poddy_trained,
-    diet: pet.diet,
-    image_url: pet.image_url,
-    likes: pet.likes,
-    dislikes: pet.dislikes,
-  }
+  const placeForm = {
+    owner: place.owner,
+    street_address: place.street_address,
+    city: place.city,
+    state: place.state,
+    country: place.country,
+    description: place.description,
+    images_url: place.images_url,
+    id_document: place.id_document,
+  };
 
-  return <Form formId="edit-pet-form" petForm={petForm} forNewPet={false} />
-}
+  return (
+    <Form formId='edit-place-form' placeForm={placeForm} forNewPlace={false} />
+  );
+};
 
-export default EditPet
+export default EditPet;
