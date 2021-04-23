@@ -17,7 +17,7 @@ const Index = ({ users, places }) => {
           /* Create a card for each pet */
           places &&
             places.map((place) => (
-              <div>
+              <div key={place._id}>
                 <Link href='/[id]' as={`/${place._id}`}>
                   <a>{place.description}</a>
                 </Link>

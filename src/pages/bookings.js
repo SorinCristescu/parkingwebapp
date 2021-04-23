@@ -1,14 +1,29 @@
 import Head from 'next/head';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { startClock } from '../store/places/actions';
 
-export default function Bookings() {
+import Counter from '../components/Counter';
+import Clock from '../components/Clock';
+
+const Bookings = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(startClock());
+  }, [dispatch]);
+
   return (
-    <div>
+    <>
       <Head>
         <title>ShareParking - Bookings</title>
       </Head>
-      <div className='container'>
+      <div>
         <h1>Bookings page</h1>
+        <Counter />
+        <Clock />
       </div>
-    </div>
+    </>
   );
-}
+};
+
+export default Bookings;
