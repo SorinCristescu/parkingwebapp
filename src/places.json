@@ -1,0 +1,40 @@
+{
+  "places": [
+    {
+      "id": 1,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "44.415479",
+          "longitude": "26.107957"
+        },
+        "street_address": "Bulevardul Gheorghe Șincai, București"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 2,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "44.419136",
+          "longitude": "26.108239"
+        },
+        "street_address": "Strada Ion Roată 10, București 040332"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 3,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "44.419780",
+          "longitude": "26.103947"
+        },
+        "street_address": "DN5, București"
+      },
+      "description": "djfheu efe efwe"
+    }
+  ]
+}
