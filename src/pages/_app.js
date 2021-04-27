@@ -7,7 +7,7 @@ import { useStore } from '../store';
 
 import '../css/style.css';
 
-import Header from '../components/Header';
+import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
@@ -17,10 +17,9 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider theme={theme}>
         <AuthProvider session={pageProps.session}>
           <main>
-            <Header />
-            <div>
+            <Layout>
               <Component {...pageProps} />
-            </div>
+            </Layout>
           </main>
         </AuthProvider>
       </ThemeProvider>

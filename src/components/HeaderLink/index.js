@@ -1,16 +1,22 @@
 import React from 'react';
 import Link from 'next/link';
 
-import styles from './HeaderLink.module.css';
+import { Container } from './style';
 
-export default function HeaderLink({ name, href, iconSrc }) {
+export default function HeaderLink({
+  name,
+  href,
+  iconSrc,
+  textAlign,
+  fontSize,
+}) {
   return (
     <Link href={href}>
       <a>
-        <div className={styles.link_container}>
-          {iconSrc && <img className={styles.icon} src={iconSrc} alt='' />}
+        <Container textAlign={textAlign} fontSize={fontSize}>
+          {iconSrc && <img src={iconSrc} alt="" />}
           <p>{name}</p>
-        </div>
+        </Container>
       </a>
     </Link>
   );

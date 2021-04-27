@@ -11,13 +11,13 @@ import styled from 'styled-components';
 // };
 
 function Pin(props) {
-  const { size = 20 } = props;
+  // const { size = 20 } = props;
 
   return (
     // <svg height={size} viewBox='0 0 24 24' style={pinStyle}>
     //   <path d={ICON} />
     // </svg>
-    <PinContainer src='/icons/pin.svg' alt='pin icon' />
+    <PinContainer src="/icons/pin.svg" alt="pin icon" />
   );
 }
 

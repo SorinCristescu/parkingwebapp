@@ -1,8 +1,13 @@
-function Layout() {
+import Header from '../Header';
+import Footer from '../Footer';
+import { Container } from './style';
+function Layout({ children }) {
   return (
-    <div>
-      <h3>Layout</h3>
-    </div>
+    <Container>
+      <Header />
+      {children}
+      <Footer />
+    </Container>
   );
 }
 

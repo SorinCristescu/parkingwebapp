@@ -1,68 +1,71 @@
 import React from 'react';
 import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/client';
-import styles from './Header.module.css';
 
+import { Container, Navbar, Nav } from './style';
 import HeaderLink from '../HeaderLink';
 import ButtonLink from '../ButtonLink';
+import User from '../User';
 
 export default function Header() {
   const [session, loading] = useSession();
 
   return (
-    <div className={styles.header}>
-      <div className={styles.navbar}>
-        <Link href='/'>
+    <Container>
+      <Navbar>
+        <Link href="/">
           <a>
-            <img src='./logo/logo_small.svg' alt='logo' />
+            <img src="./logo/logo_small.svg" alt="logo" />
           </a>
         </Link>
-      </div>
+        {session && (
+          <User
+            src={session.user.image}
+            alt={`${session.user.name} photo`}
+            name={session.user.name}
+          />
+        )}
+      </Navbar>
 
-      <div className={styles.nav}>
+      <Nav>
         <HeaderLink
-          href='/find-a-place'
-          name='Find a place'
-          iconSrc='/icons/marker.svg'
+          href="/find-a-place"
+          name="Find a place"
+          iconSrc="/icons/marker.svg"
+          textAlign="center"
+          fontSize="12px"
         />
         <HeaderLink
-          href='/bookings'
-          name='Bookings'
-          iconSrc='/icons/bookings.svg'
+          href="/bookings"
+          name="Bookings"
+          iconSrc="/icons/bookings.svg"
+          textAlign="center"
+          fontSize="12px"
         />
         <HeaderLink
-          href='/manage-my-places'
-          name='Manage my place(s)'
-          iconSrc='/icons/money.svg'
+          href="/manage-my-places"
+          name="Manage my place(s)"
+          iconSrc="/icons/money.svg"
+          textAlign="center"
+          fontSize="12px"
         />
         {!session && (
           <ButtonLink
-            name='Sign in'
-            iconSrc='/icons/profile.svg'
+            name="Sign in"
+            iconSrc="/icons/profile.svg"
             handleClick={() => signIn()}
           />
         )}
         {session && (
           <ButtonLink
-            name='Sign out'
-            iconSrc='/icons/profile.svg'
+            name="Sign out"
+            iconSrc="/icons/profile.svg"
             handleClick={() => signOut()}
           />
         )}
 
-        {session && (
-          <div className={styles.user}>
-            <p className={styles.username}>{session.user.name}</p>
-            <img
-              className={styles.userimage}
-              src={session.user.image}
-              alt={`${session.user.name} photo`}
-            />
-          </div>
-        )}
-
         {/* <HeaderLink href='/sign-up' name='Find a place' iconSrc='/icons/marker.svg'/> */}
-      </div>
-    </div>
+      </Nav>
+    </Container>
   );
 }
