@@ -12,10 +12,16 @@ const Form = ({ formId, placeForm, forNewPlace = true }) => {
 
   const [form, setForm] = useState({
     owner: placeForm.owner,
-    street_address: placeForm.street_address,
-    city: placeForm.city,
-    state: placeForm.state,
-    country: placeForm.country,
+    location: {
+      street_address: placeForm.street_address,
+      city: placeForm.city,
+      state: placeForm.state,
+      country: placeForm.country,
+      // coordinates: {
+      //   latitude: placeForm.latitude,
+      //   longitude: placeForm.longitude,
+      // },
+    },
     description: placeForm.description,
     images_url: placeForm.images_url,
     id_document: placeForm.id_document,

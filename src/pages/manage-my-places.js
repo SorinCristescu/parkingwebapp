@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Map from '../components/Map';
 
 function ManageMyPlaces() {
   return (
@@ -7,7 +8,7 @@ function ManageMyPlaces() {
         <title>ShareParking - Manage my places</title>
       </Head>
       <div className='container'>
-        <h1>Manage my places page</h1>
+        <Map addPin={true} />
       </div>
     </div>
   );

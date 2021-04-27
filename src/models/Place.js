@@ -8,26 +8,39 @@ const PlaceSchema = new mongoose.Schema({
     required: [true, "Please provide the place owner's name"],
     maxlength: [20, "Owner's Name cannot be more than 60 characters"],
   },
-  street_address: {
-    type: String,
-    required: [true, 'Please provide a street address for this place'],
-    maxlength: [20, "Owner's Name cannot be more than 60 characters"],
+  location: {
+    street_address: {
+      type: String,
+      required: [true, 'Please provide a street address for this place'],
+      maxlength: [20, "Owner's Name cannot be more than 60 characters"],
+    },
+    city: {
+      type: String,
+      required: [true, 'Please provide a city for this place'],
+      maxlength: [20, "Owner's Name cannot be more than 60 characters"],
+    },
+    state: {
+      type: String,
+      required: [true, 'Please provide a state for this place'],
+      maxlength: [20, "Owner's Name cannot be more than 60 characters"],
+    },
+    country: {
+      type: String,
+      required: [true, 'Please provide a country for this place'],
+      maxlength: [20, "Owner's Name cannot be more than 60 characters"],
+    },
+    coordinates: {
+      latitude: {
+        type: Point,
+        required: [true, 'Please provide the place latitude'],
+      },
+      longitude: {
+        type: Point,
+        required: [true, 'Please provide the place longitude'],
+      },
+    },
   },
-  city: {
-    type: String,
-    required: [true, 'Please provide a city for this place'],
-    maxlength: [20, "Owner's Name cannot be more than 60 characters"],
-  },
-  state: {
-    type: String,
-    required: [true, 'Please provide a state for this place'],
-    maxlength: [20, "Owner's Name cannot be more than 60 characters"],
-  },
-  country: {
-    type: String,
-    required: [true, 'Please provide a country for this place'],
-    maxlength: [20, "Owner's Name cannot be more than 60 characters"],
-  },
+
   description: {
     type: String,
     required: [true, 'Please provide a description for this place.'],

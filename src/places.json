@@ -35,6 +35,30 @@
         "street_address": "DN5, București"
       },
       "description": "djfheu efe efwe"
+    },
+    {
+      "id": 4,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "44.374699",
+          "longitude": "26.122027"
+        },
+        "street_address": "Drumul Gilăului, București"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 5,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "44.367694",
+          "longitude": "26.118379"
+        },
+        "street_address": "Sector 4, Bucharest"
+      },
+      "description": "djfheu efe efwe"
     }
   ]
 }

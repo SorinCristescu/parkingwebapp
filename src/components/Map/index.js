@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactMapGl, {
   Marker,
   Popup,
@@ -7,6 +7,8 @@ import ReactMapGl, {
   GeolocateControl,
 } from 'react-map-gl';
 import useSupercluster from 'use-supercluster';
+
+import Pin from '../Pin';
 
 import styled from 'styled-components';
 
@@ -23,7 +25,7 @@ const geolocateControlStyle = {
   bottom: 100,
 };
 
-function Map({ markers }) {
+function Map({ markers, addPin }) {
   const [viewport, setViewport] = useState({
     latitude: 44.415479,
     longitude: 26.107957,
@@ -47,23 +49,25 @@ function Map({ markers }) {
     };
   }, []);
 
-  const points = markers.default.places.map((marker) => ({
-    type: 'Feature',
-    properties: {
-      cluster: false,
-      markerId: marker.id,
-      category: marker.category,
-      street_address: marker.location.street_address,
-      description: marker.description,
-    },
-    geometry: {
-      type: 'Point',
-      coordinates: [
-        parseFloat(marker.location.coordinates.longitude),
-        parseFloat(marker.location.coordinates.latitude),
-      ],
-    },
-  }));
+  const points = markers
+    ? markers.default.places.map((marker) => ({
+        type: 'Feature',
+        properties: {
+          cluster: false,
+          markerId: marker.id,
+          category: marker.category,
+          street_address: marker.location.street_address,
+          description: marker.description,
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [
+            parseFloat(marker.location.coordinates.longitude),
+            parseFloat(marker.location.coordinates.latitude),
+          ],
+        },
+      }))
+    : [];
 
   // get map bounds
   const bounds = mapRef.current
@@ -81,6 +85,28 @@ function Map({ markers }) {
     },
   });
 
+  const [pin, setPin] = useState({
+    latitude: 44.429724,
+    longitude: 26.082537,
+  });
+  const [events, logEvents] = useState({});
+
+  const onMarkerDragStart = useCallback((event) => {
+    logEvents((_events) => ({ ..._events, onDragStart: event.lngLat }));
+  }, []);
+
+  const onMarkerDrag = useCallback((event) => {
+    logEvents((_events) => ({ ..._events, onDrag: event.lngLat }));
+  }, []);
+
+  const onMarkerDragEnd = useCallback((event) => {
+    logEvents((_events) => ({ ..._events, onDragEnd: event.lngLat }));
+    setPin({
+      longitude: event.lngLat[0],
+      latitude: event.lngLat[1],
+    });
+  }, []);
+
   return (
     <div>
       <ReactMapGl
@@ -96,55 +122,58 @@ function Map({ markers }) {
           style={geolocateControlStyle}
           positionOptions={{ enableHighAccuracy: true }}
           trackUserLocation={true}
+          showUserLocation={true}
+          showAccuracyCircle={true}
           auto
         />
-        {clusters.map((cluster) => {
-          const [longitude, latitude] = cluster.geometry.coordinates;
-          const {
-            cluster: isCluster,
-            point_count: pointCount,
-          } = cluster.properties;
-          console.log('cluster', cluster);
-          if (isCluster) {
+        {!addPin &&
+          clusters &&
+          clusters.map((cluster) => {
+            const [longitude, latitude] = cluster.geometry.coordinates;
+            const {
+              cluster: isCluster,
+              point_count: pointCount,
+            } = cluster.properties;
+            console.log('cluster', cluster);
+            if (isCluster) {
+              return (
+                <Marker
+                  key={cluster.id}
+                  latitude={latitude}
+                  longitude={longitude}
+                >
+                  <ClusterMarker>
+                    <p>{pointCount}</p>
+                  </ClusterMarker>
+                </Marker>
+              );
+            }
             return (
               <Marker
-                key={cluster.id}
+                key={cluster.properties.markerId}
                 latitude={latitude}
                 longitude={longitude}
               >
-                <ClusterMarker>
-                  <p>{pointCount}</p>
-                </ClusterMarker>
+                <MarkerButton
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedMarker(cluster);
+                  }}
+                >
+                  <img
+                    src={
+                      selectedMarker === cluster
+                        ? '/icons/parking pin selected.svg'
+                        : '/icons/parking pin.svg'
+                    }
+                    alt='Parking place icon'
+                  />
+                </MarkerButton>
               </Marker>
             );
-          }
-          return (
-            <Marker
-              key={cluster.properties.markerId}
-              latitude={latitude}
-              longitude={longitude}
-              draggable
-            >
-              <MarkerButton
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedMarker(cluster);
-                }}
-              >
-                <img
-                  src={
-                    selectedMarker === cluster
-                      ? '/icons/parking pin selected.svg'
-                      : '/icons/parking pin.svg'
-                  }
-                  alt='Parking place icon'
-                />
-              </MarkerButton>
-            </Marker>
-          );
-        })}
+          })}
 
-        {selectedMarker ? (
+        {!addPin && selectedMarker ? (
           <Popup
             latitude={selectedMarker.geometry.coordinates[1]}
             longitude={selectedMarker.geometry.coordinates[0]}
@@ -157,6 +186,22 @@ function Map({ markers }) {
               <p>{selectedMarker.properties.description}</p>
             </div>
           </Popup>
+        ) : null}
+        {addPin ? (
+          <Marker
+            longitude={pin.longitude}
+            latitude={pin.latitude}
+            offsetTop={-20}
+            offsetLeft={-10}
+            draggable
+            onDragStart={onMarkerDragStart}
+            onDrag={onMarkerDrag}
+            onDragEnd={onMarkerDragEnd}
+          >
+            <Pin
+            // size={20}
+            />
+          </Marker>
         ) : null}
       </ReactMapGl>
     </div>

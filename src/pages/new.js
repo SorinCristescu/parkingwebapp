@@ -3,10 +3,17 @@ import Form from '../components/Form';
 const NewPlace = () => {
   const placeForm = {
     owner: '',
-    street_address: '',
-    city: '',
-    state: '',
-    country: '',
+    location: {
+      street_address: '',
+      city: '',
+      state: '',
+      country: '',
+      coordinates: {
+        latitude: '',
+        longitude: '',
+      },
+    },
+
     description: '',
     images_url: '',
     id_document: '',
