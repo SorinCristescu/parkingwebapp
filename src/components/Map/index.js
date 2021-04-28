@@ -1,3 +1,6 @@
+import 'mapbox-gl/dist/mapbox-gl.css';
+import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactMapGl, {
   Marker,
@@ -5,7 +8,9 @@ import ReactMapGl, {
   FullscreenControl,
   NavigationControl,
   GeolocateControl,
+  FlyToInterpolator,
 } from 'react-map-gl';
+import Geocoder from 'react-map-gl-geocoder';
 import useSupercluster from 'use-supercluster';
 
 import Pin from '../Pin';
@@ -25,11 +30,13 @@ const geolocateControlStyle = {
   bottom: 100,
 };
 
-function Map({ markers, addPin }) {
+function Map({ markers, addPin, selectedCity }) {
+  const { latitude, longitude } = selectedCity.coordinates;
+
   const [viewport, setViewport] = useState({
-    latitude: 44.415479,
-    longitude: 26.107957,
-    zoom: 13,
+    latitude: latitude,
+    longitude: longitude,
+    zoom: 11,
     width: '100%',
     height: '80vh',
   });
@@ -37,6 +44,15 @@ function Map({ markers, addPin }) {
   const mapRef = useRef();
 
   useEffect(() => {
+    setViewport({
+      ...viewport,
+      longitude,
+      latitude,
+      zoom: 11,
+      transitionDuration: 5000,
+      transitionInterpolator: new FlyToInterpolator(),
+      // transitionEasing: d3.easeCubic,
+    });
     const listener = (e) => {
       if (e.key === 'Escape') {
         setSelectedMarker(null);
@@ -47,7 +63,24 @@ function Map({ markers, addPin }) {
     return () => {
       window.removeEventListener('keydown', listener);
     };
-  }, []);
+  }, [selectedCity]);
+
+  const handleViewportChange = useCallback(
+    (newViewport) => setViewport(newViewport),
+    []
+  );
+
+  const handleGeocoderViewportChange = useCallback(
+    (newViewport) => {
+      const geocoderDefaultOverrides = { transitionDuration: 1000 };
+
+      return handleViewportChange({
+        ...newViewport,
+        ...geocoderDefaultOverrides,
+      });
+    },
+    [handleViewportChange]
+  );
 
   const points = markers
     ? markers.default.places.map((marker) => ({
@@ -112,9 +145,9 @@ function Map({ markers, addPin }) {
       <ReactMapGl
         ref={mapRef}
         {...viewport}
-        mapboxApiAccessToken='pk.eyJ1Ijoic29yaW5jcmlzdGVzY3UiLCJhIjoiY2tueWdvOXM1MWc0aDJ2b2FtdjFuNmpxYyJ9.pXTxGHIAah6NwaRjNrTEWw'
-        mapStyle='mapbox://styles/sorincristescu/cknyhu5kh0g5i17qcl5zk3oi1'
-        onViewportChange={(nextViewport) => setViewport(nextViewport)}
+        mapboxApiAccessToken="pk.eyJ1Ijoic29yaW5jcmlzdGVzY3UiLCJhIjoiY2tueWdvOXM1MWc0aDJ2b2FtdjFuNmpxYyJ9.pXTxGHIAah6NwaRjNrTEWw"
+        mapStyle="mapbox://styles/mapbox/dark-v9"
+        onViewportChange={handleViewportChange}
       >
         <FullscreenControl style={fullscreenControlStyle} />
         <NavigationControl style={navControlStyle} />
@@ -125,6 +158,16 @@ function Map({ markers, addPin }) {
           showUserLocation={true}
           showAccuracyCircle={true}
           auto
+        />
+        <Geocoder
+          mapRef={mapRef}
+          onViewportChange={handleGeocoderViewportChange}
+          mapboxApiAccessToken="pk.eyJ1Ijoic29yaW5jcmlzdGVzY3UiLCJhIjoiY2tueWdvOXM1MWc0aDJ2b2FtdjFuNmpxYyJ9.pXTxGHIAah6NwaRjNrTEWw"
+          position="top-left"
+          placeholder="Search address"
+          collapsed
+          // proximity={}
+          trackProximity
         />
         {!addPin &&
           clusters &&
@@ -166,7 +209,7 @@ function Map({ markers, addPin }) {
                         ? '/icons/parking pin selected.svg'
                         : '/icons/parking pin.svg'
                     }
-                    alt='Parking place icon'
+                    alt="Parking place icon"
                   />
                 </MarkerButton>
               </Marker>
@@ -231,15 +274,15 @@ const MarkerButton = styled.button`
 const ClusterMarker = styled.div`
   width: 40px;
   height: 40px;
-  border: 1px solid #000;
+  border: 1px solid #56ccf2;
   border-radius: 50%;
-  background: #000;
-  opacity: 0.6;
+  background: #56ccf2;
+  opacity: 0.8;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #000;
 
   &:hover {
     transform: scale(1.2);

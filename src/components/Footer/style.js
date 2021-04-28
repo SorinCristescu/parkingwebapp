@@ -33,7 +33,7 @@ export const RightSide = styled.div`
   align-items: center;
   justify-content: center;
 
-  img {
+  .logo {
     width: 300px;
     height: auto;
   }

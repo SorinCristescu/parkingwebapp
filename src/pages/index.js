@@ -3,13 +3,14 @@ import User from '../models/User';
 // import Place from '../models/Place';
 import Head from 'next/head';
 import Link from 'next/link';
+import { signIn, signOut, useSession } from 'next-auth/client';
 
 import Button from '../components/Button';
 import DownloadApp from '../components/DownloadApp';
 import styled from 'styled-components';
 
 const Index = ({ users, places }) => {
-  console.log(users, places);
+  const [session, loading] = useSession();
   return (
     <>
       <Head>
@@ -18,12 +19,20 @@ const Index = ({ users, places }) => {
       <Section url="/images/parking_places.png">
         <div className="left-container">
           <h1 className="hero-title">Making the most out of every space</h1>
-          <Button title="Sign up now!" width="325px" />
+          {!session && (
+            <Button
+              onClick={() => signIn()}
+              title="Sign up now!"
+              width="380px"
+            />
+          )}
           <DownloadApp />
         </div>
-        <div className="right-container"></div>
+        <div className="right-container">
+          <img className="app-image" src="/images/app.svg" alt="App image" />
+        </div>
       </Section>
-      <div className="container">
+      <div>
         {
           /* Create a card for each pet */
           places &&
@@ -78,6 +87,10 @@ const Section = styled.section`
   justify-content: space-between;
   padding: 0 100px;
   background-image: url(${(props) => props.url});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: #0a0a0a;
 
   .left-container {
     width: 50%;
@@ -90,6 +103,15 @@ const Section = styled.section`
   .right-container {
     width: 50%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app-image {
+    margin-top: 80px;
+    width: 300px;
+    height: auto;
   }
 
   .hero-title {

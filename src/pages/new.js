@@ -1,4 +1,5 @@
 import Form from '../components/Form';
+import Map from '../components/Map';
 
 const NewPlace = () => {
   const placeForm = {
@@ -21,7 +22,8 @@ const NewPlace = () => {
 
   return (
     <div style={{ marginTop: '100px', width: '400px' }}>
-      <Form formId='add-place-form' placeForm={placeForm} />
+      {/* <Form formId="add-place-form" placeForm={placeForm} /> */}
+      {/* <Map addPin={true} /> */}
     </div>
   );
 };

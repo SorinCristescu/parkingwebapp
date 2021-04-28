@@ -10,6 +10,7 @@ export const Container = styled.div`
   cursor: pointer;
   width: ${(props) => props.width};
   height: 50px;
+
   filter: drop-shadow(0px 4px 4px rgba(50, 50, 71, 0.08)),
     drop-shadow(0px 4px 8px rgba(50, 50, 71, 0.06));
 

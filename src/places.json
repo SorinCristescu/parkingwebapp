@@ -59,6 +59,150 @@
         "street_address": "Sector 4, Bucharest"
       },
       "description": "djfheu efe efwe"
+    },
+    {
+      "id": 6,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "45.648710",
+          "longitude": "25.599053"
+        },
+        "street_address": "Strada Iuliu Maniu 36, Brașov 500091"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 7,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "45.641360",
+          "longitude": "25.625040"
+        },
+        "street_address": "Strada Ciprian Porumbescu, Brașov"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 8,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "44.162662",
+          "longitude": "28.629377"
+        },
+        "street_address": "Strada Ancorei 4, Constanța 900178"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 9,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "44.204138",
+          "longitude": "28.644739"
+        },
+        "street_address": "Bulevardul Mamaia 243-241, Constanța"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 10,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "47.160057",
+          "longitude": "27.578075"
+        },
+        "street_address": "Strada Funcţionarilor 11-9, Iași 700259"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 11,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "47.162101",
+          "longitude": "27.613173"
+        },
+        "street_address": "Tătărași Nord, Iași 700259"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 12,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "45.754835",
+          "longitude": "21.223153"
+        },
+        "street_address": "Strada Paris 2, Timișoara"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 13,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "45.759671",
+          "longitude": "21.194182"
+        },
+        "street_address": "Strada Agricultorilor 31, Timișoara"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 14,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "46.768587",
+          "longitude": "23.589879"
+        },
+        "street_address": "Palatul Sebestyén, Strada Universității 1-3, Cluj-Napoca 400000"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 15,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "46.786446",
+          "longitude": "23.619739"
+        },
+        "street_address": "Strada Mărgăritarilor 22, Cluj-Napoca 400000"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 16,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "44.473718",
+          "longitude": "26.051437"
+        },
+        "street_address": "Strada Soveja 109-89, București 012244"
+      },
+      "description": "djfheu efe efwe"
+    },
+    {
+      "id": 17,
+      "category": "auto",
+      "location": {
+        "coordinates": {
+          "latitude": "44.460539",
+          "longitude": "26.118433"
+        },
+        "street_address": "Strada Scheiul de Sus 23, București"
+      },
+      "description": "djfheu efe efwe"
     }
   ]
 }

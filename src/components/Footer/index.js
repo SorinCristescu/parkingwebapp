@@ -98,7 +98,7 @@ function Footer() {
         </NavBar>
       </LeftSide>
       <RightSide>
-        <img src="/logo/logo_small.svg" alt="logo icon" />
+        <img className="logo" src="/logo/logo_small.svg" alt="logo icon" />
         <DownloadApp />
         <SocialMedia />
       </RightSide>

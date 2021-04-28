@@ -17,6 +17,6 @@ export const Container = styled.div`
     font-size: ${(props) => props.fontSize};
     text-align: ${(props) => props.textAlign};
     margin-top: 5px;
-    color: #bdbdbd;
+    color: #494848;
   }
 `;

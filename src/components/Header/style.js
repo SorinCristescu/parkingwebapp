@@ -12,7 +12,7 @@ export const Container = styled.header`
   align-items: center;
   justify-content: space-between;
   background: linear-gradient(180deg, #090909 70.31%, rgba(51, 51, 51, 0) 100%);
-  z-index: 1;
+  z-index: 100;
 `;
 
 export const Navbar = styled.nav`
